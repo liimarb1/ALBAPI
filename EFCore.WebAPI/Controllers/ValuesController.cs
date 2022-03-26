@@ -1,6 +1,7 @@
 ﻿using EFCore.WebAPI.Dominio;
 using EFCore.WebAPI.Repo;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,8 +24,9 @@ namespace EFCore.WebAPI.Controllers
         public ActionResult GetFiltro(string nome)
         {
             var listFuncionario = _context.Funcionarios
-                .Where(f => f.Nome.Contains(nome))
-                .ToList();
+                .Where(f => EF.Functions.Like(f.Nome, $"%{nome}%"))
+                .OrderByDescending(f => f.Id)
+                .LastOrDefault();
             //var listFuncionario = (from funcionario in _context.Funcionarios
             //                       where funcionario.Nome.Contains(nome)
             //                       select funcionario).ToList();
