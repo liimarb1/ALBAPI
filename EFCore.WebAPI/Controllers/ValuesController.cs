@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using EFCore.WebAPI.Dominio;
+using EFCore.WebAPI.Repo;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,18 +12,59 @@ namespace EFCore.WebAPI.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
-        // GET api/values
-        [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public readonly ITContext _context;
+        public ValuesController(ITContext context)
         {
-            return new string[] { "value1", "value2" };
+            _context = context;
+        }
+
+        // GET api/values
+        [HttpGet("filtro/{nome}")]
+        public ActionResult GetFiltro(string nome)
+        {
+            var listFuncionario = _context.Funcionarios
+                .Where(f => f.Nome.Contains(nome))
+                .ToList();
+            //var listFuncionario = (from funcionario in _context.Funcionarios
+            //                       where funcionario.Nome.Contains(nome)
+            //                       select funcionario).ToList();
+            return Ok(listFuncionario);
+        }
+        
+
+        // GET api/values/5
+        [HttpGet("Atualizar/{nameFunc}")]
+        public ActionResult<string> Get(string nameFunc)
+        {
+            //var funcionario = new Funcionario { Nome = nameFunc };
+
+            var funcionario = _context.Funcionarios
+                                    .Where(f => f.Id == 4)
+                                     .FirstOrDefault();
+            funcionario.Nome = "Sergio";
+
+                 //_context.Funcionarios.Add(funcionario);
+            _context.SaveChanges();
+
+            return Ok();
         }
 
         // GET api/values/5
-        [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        [HttpGet("AddRange")]
+        public ActionResult GetAddRange()
         {
-            return "value";
+
+            _context.AddRange(
+
+                new Funcionario { Nome = "Vitor" },
+                new Funcionario { Nome = "Thiago" },
+                new Funcionario { Nome = "Vivian" }
+
+                );
+
+            _context.SaveChanges();
+
+            return Ok();
         }
 
         // POST api/values
@@ -37,9 +80,15 @@ namespace EFCore.WebAPI.Controllers
         }
 
         // DELETE api/values/5
-        [HttpDelete("{id}")]
+        [HttpGet("Delete/{id}")]
         public void Delete(int id)
         {
+            var funcionario = _context.Funcionarios
+                                .Where(x => x.Id == id)
+                                .Single();
+
+            _context.Funcionarios.Remove(funcionario);
+            _context.SaveChanges();
         }
     }
 }

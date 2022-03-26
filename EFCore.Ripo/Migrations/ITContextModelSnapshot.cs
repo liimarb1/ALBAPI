@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace EFCore.WebAPI.Migrations
+namespace EFCore.Repo.Migrations
 {
     [DbContext(typeof(ITContext))]
     partial class ITContextModelSnapshot : ModelSnapshot
@@ -19,7 +19,7 @@ namespace EFCore.WebAPI.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("EFCore.WebAPI.Models.Equipamento", b =>
+            modelBuilder.Entity("EFCore.WebAPI.Dominio.Equipamento", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -36,7 +36,7 @@ namespace EFCore.WebAPI.Migrations
                     b.ToTable("Equipamentos");
                 });
 
-            modelBuilder.Entity("EFCore.WebAPI.Models.FuncSquad", b =>
+            modelBuilder.Entity("EFCore.WebAPI.Dominio.FuncSquad", b =>
                 {
                     b.Property<int>("FuncionarioId");
 
@@ -49,7 +49,7 @@ namespace EFCore.WebAPI.Migrations
                     b.ToTable("FuncionariosSquads");
                 });
 
-            modelBuilder.Entity("EFCore.WebAPI.Models.Funcionario", b =>
+            modelBuilder.Entity("EFCore.WebAPI.Dominio.Funcionario", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -62,7 +62,7 @@ namespace EFCore.WebAPI.Migrations
                     b.ToTable("Funcionarios");
                 });
 
-            modelBuilder.Entity("EFCore.WebAPI.Models.Gestor", b =>
+            modelBuilder.Entity("EFCore.WebAPI.Dominio.Gestor", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -80,7 +80,7 @@ namespace EFCore.WebAPI.Migrations
                     b.ToTable("Gestores");
                 });
 
-            modelBuilder.Entity("EFCore.WebAPI.Models.Squad", b =>
+            modelBuilder.Entity("EFCore.WebAPI.Dominio.Squad", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -99,32 +99,32 @@ namespace EFCore.WebAPI.Migrations
                     b.ToTable("Squads");
                 });
 
-            modelBuilder.Entity("EFCore.WebAPI.Models.Equipamento", b =>
+            modelBuilder.Entity("EFCore.WebAPI.Dominio.Equipamento", b =>
                 {
-                    b.HasOne("EFCore.WebAPI.Models.Funcionario", "Funcionario")
+                    b.HasOne("EFCore.WebAPI.Dominio.Funcionario", "Funcionario")
                         .WithMany("Equipamentos")
                         .HasForeignKey("FuncionarioId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("EFCore.WebAPI.Models.FuncSquad", b =>
+            modelBuilder.Entity("EFCore.WebAPI.Dominio.FuncSquad", b =>
                 {
-                    b.HasOne("EFCore.WebAPI.Models.Funcionario", "Funcionario")
+                    b.HasOne("EFCore.WebAPI.Dominio.Funcionario", "Funcionario")
                         .WithMany("FuncionariosSquads")
                         .HasForeignKey("FuncionarioId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("EFCore.WebAPI.Models.Squad", "Squad")
+                    b.HasOne("EFCore.WebAPI.Dominio.Squad", "Squad")
                         .WithMany("FuncionariosSquads")
                         .HasForeignKey("SquadId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("EFCore.WebAPI.Models.Gestor", b =>
+            modelBuilder.Entity("EFCore.WebAPI.Dominio.Gestor", b =>
                 {
-                    b.HasOne("EFCore.WebAPI.Models.Funcionario", "Funcionario")
+                    b.HasOne("EFCore.WebAPI.Dominio.Funcionario", "Funcionario")
                         .WithOne("Gestor")
-                        .HasForeignKey("EFCore.WebAPI.Models.Gestor", "FuncionarioId")
+                        .HasForeignKey("EFCore.WebAPI.Dominio.Gestor", "FuncionarioId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
