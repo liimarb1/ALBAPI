@@ -14,5 +14,6 @@ namespace EFCore.WebAPI.Dominio
         public DateTime DtFim { get; set; }
         public List<FuncSquad> FuncionariosSquads { get; set; }
 
+        //List colocar no plural
     }
 }

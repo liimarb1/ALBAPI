@@ -9,7 +9,10 @@ namespace EFCore.WebAPI.Repo
 {
     public class ITContext : DbContext
     {
-      
+
+        //Padrão entityframework = quando criar uma entidade lista tem que ser plural, exemplo: equipamentos
+        //DbSet = Lista
+
         public ITContext(DbContextOptions<ITContext> options) : base(options) {}
         public DbSet<Equipamento> Equipamentos { get; set; }
         public DbSet<Funcionario> Funcionarios { get; set; }
@@ -19,6 +22,8 @@ namespace EFCore.WebAPI.Repo
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //chave para gerar a Haskey composta
+
             modelBuilder.Entity<FuncSquad>(entity =>
             {
                 entity.HasKey(e => new { e.FuncionarioId, e.SquadId });

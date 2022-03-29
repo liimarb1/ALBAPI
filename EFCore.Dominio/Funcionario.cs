@@ -7,6 +7,9 @@ namespace EFCore.WebAPI.Dominio
 {
     public class Funcionario
     {
+
+        //List<> ou IEnumerable
+        //muitos pra muitos, varios funcionarios podem ter varios equipamentos
         public int Id { get; set; }
         public string Nome { get; set; }
         public Gestor Gestor { get; set; }
